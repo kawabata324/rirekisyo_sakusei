@@ -10,6 +10,7 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
       t.date :birth_date_on
       t.integer :age
       t.string :sex, default: 'unknown'
+      t.references :personal_history, null: false,foreign_key: true
 
       t.timestamps
     end

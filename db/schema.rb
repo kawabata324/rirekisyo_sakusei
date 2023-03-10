@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_10_102446) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_10_120851) do
+  create_table "personal_histories", force: :cascade do |t|
+    t.string "uuid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.string "first_name"
     t.string "first_name_kana"
@@ -21,8 +27,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_10_102446) do
     t.date "birth_date_on"
     t.integer "age"
     t.string "sex", default: "unknown"
+    t.integer "personal_history_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["personal_history_id"], name: "index_profiles_on_personal_history_id"
   end
 
+  add_foreign_key "profiles", "personal_histories"
 end
