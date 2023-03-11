@@ -1,6 +1,8 @@
 class PersonalHistories::PdfsController < PersonalHistories::ApplicationController
+  PDF_FONT_PATH = 'app/assets/fonts/ipaexm.ttf'
+
   def index
-    pdf = SamplePdf.new
+    pdf = SamplePdf.new(personal_history: @personal_history)
     # TODO: https://medium.com/@sushantbajracharya/rails-api-and-prawn-gem-a11e4926f228
     # フロントに送る時は上記を参考にする
     send_data pdf.render,
@@ -11,12 +13,13 @@ class PersonalHistories::PdfsController < PersonalHistories::ApplicationControll
 end
 
 class SamplePdf < Prawn::Document
-  def initialize
+  def initialize(personal_history:)
     super()
-    font 'app/assets/fonts/ipaexm.ttf'
+    @personal_history = personal_history
+    font PersonalHistories::PdfsController::PDF_FONT_PATH
     move_down 10
-    create_title
-    create_profile
+    create_title(updated_on: @personal_history.updated_on)
+    create_profile(profile: @personal_history.profile)
     create_address
     move_down 10
     dummy_educational_back_ground = [
@@ -52,36 +55,37 @@ class SamplePdf < Prawn::Document
     create_self_content
   end
 
-  def create_title
+  def create_title(updated_on:)
     table([
             [
               make_cell(content: '履  歴  書', width: 200, align: :left, size: 18),
-              make_cell(content: I18n.l(Date.current, format: :long), width: 200, align: :right, size: 10, valign: :bottom)
+              make_cell(content: "#{I18n.l(updated_on, format: :long)} 現在", width: 200, align: :right, size: 10, valign: :bottom)
             ]
           ], width: 400) do
       row(0).borders = []
     end
   end
 
-  def create_profile
+  def create_profile(profile:)
     age_box = [
       make_cell(content: '', width: 60),
-      make_cell(content: 'xxxx年 x月 xx日生 (満 22 歳)', width: 340, align: :left, valign: :center),
+      make_cell(content: "#{profile.format_birthdate} #{profile.format_age}", width: 340, align: :left, valign: :center),
       make_cell(content: '', width: 30, align: :left, valign: :center),
       make_cell(content: '', width: 90, align: :left, valign: :center)
     ]
 
     kana_box = [
       make_cell(content: 'ふりがな', width: 60),
-      make_cell(content: 'xx xxxx', width: 340, align: :left, valign: :center),
+      make_cell(content: "#{profile.first_name_kana || ''} #{profile.last_name_kana || ''}", width: 340, align: :left, valign: :center),
       make_cell(content: '', width: 30, align: :left, valign: :center),
       make_cell(content: '', width: 90, align: :left, valign: :center)
     ]
 
     name_box = [
       make_cell(content: '名前', width: 60),
-      make_cell(content: 'xx xxx', width: 340, height: 40, align: :left, valign: :center, size: 20),
+      make_cell(content: "#{profile.first_name || ''} #{profile.last_name || ''}", width: 340, height: 40, align: :left, valign: :center, size: 20),
       make_cell(content: '', width: 30, align: :left, valign: :center),
+      # TODO 写真ができたら実装する
       make_cell(content: ' 写真 ', width: 90, height: 40, align: :center, valign: :center, size: 20)
     ]
 
