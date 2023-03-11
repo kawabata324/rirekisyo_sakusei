@@ -18,8 +18,8 @@ class SamplePdf < Prawn::Document
     @personal_history = personal_history
     @profile = @personal_history.profile
     @address = @personal_history.address
-    @educational_back_grounds = @personal_history.format_educational_back_grounds
-    @license_back_grounds = @personal_history.format_license_back_grounds
+    @educational_back_grounds = @personal_history.format_back_grounds(back_grounds: @personal_history.educational_back_grounds)
+    @license_back_grounds = @personal_history.format_back_grounds(back_grounds: @personal_history.license_back_grounds)
     font PersonalHistories::PdfsController::PDF_FONT_PATH
     move_down 10
     # 履歴書タイトル

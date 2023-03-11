@@ -8,22 +8,12 @@ class PersonalHistory < ApplicationRecord
     self.updated_at.to_date
   end
 
-  def format_educational_back_grounds
-    educational_back_grounds.map do |educational_back_ground|
+  def format_back_grounds(back_grounds:)
+    back_grounds.map do |back_ground|
       {
-        year: get_year_month_from_happened_on(happened_on: educational_back_ground.happened_on)[0],
-        month: get_year_month_from_happened_on(happened_on: educational_back_ground.happened_on)[1],
-        description: educational_back_ground.description
-      }
-    end
-  end
-
-  def format_license_back_grounds
-    license_back_grounds.map do |license_back_ground|
-      {
-        year: get_year_month_from_happened_on(happened_on: license_back_ground.happened_on)[0],
-        month: get_year_month_from_happened_on(happened_on: license_back_ground.happened_on)[1],
-        description: license_back_ground.description
+        year: get_year_month_from_happened_on(happened_on: back_ground.happened_on)[0],
+        month: get_year_month_from_happened_on(happened_on: back_ground.happened_on)[1],
+        description: back_ground.description
       }
     end
   end
