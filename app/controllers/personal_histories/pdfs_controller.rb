@@ -53,7 +53,7 @@ class SamplePdf < Prawn::Document
     ]
     create_back_grounds(description_title: EducationalBackGround::DESCRIPTION_TITLE, back_grounds: @educational_back_grounds)
     move_down 10
-    create_back_grounds(description_title: '資格・免許', back_grounds: @license_back_grounds)
+    create_back_grounds(description_title: LicenseBackGround::DESCRIPTION_TITLE, back_grounds: @license_back_grounds)
     move_down 10
     create_back_grounds(description_title: 'プログラミング歴', back_grounds: dummy_educational_back_ground)
     move_down 10
