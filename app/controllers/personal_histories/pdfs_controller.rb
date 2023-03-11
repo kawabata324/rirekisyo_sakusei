@@ -16,10 +16,15 @@ class SamplePdf < Prawn::Document
   def initialize(personal_history:)
     super()
     @personal_history = personal_history
+    @profile = @personal_history.profile
+    @address = @personal_history.address
     font PersonalHistories::PdfsController::PDF_FONT_PATH
     move_down 10
-    create_title(updated_on: @personal_history.updated_on)
-    create_profile(profile: @personal_history.profile)
+    # 履歴書タイトル
+    create_title
+    # プロフィール
+    create_profile
+    # 住所
     create_address
     move_down 10
     dummy_educational_back_ground = [
@@ -55,35 +60,35 @@ class SamplePdf < Prawn::Document
     create_self_content
   end
 
-  def create_title(updated_on:)
+  def create_title
     table([
             [
               make_cell(content: '履  歴  書', width: 200, align: :left, size: 18),
-              make_cell(content: "#{I18n.l(updated_on, format: :long)} 現在", width: 200, align: :right, size: 10, valign: :bottom)
+              make_cell(content: "#{I18n.l(@personal_history.updated_on, format: :long)} 現在", width: 200, align: :right, size: 10, valign: :bottom)
             ]
           ], width: 400) do
       row(0).borders = []
     end
   end
 
-  def create_profile(profile:)
+  def create_profile
     age_box = [
       make_cell(content: '', width: 60),
-      make_cell(content: "#{profile.format_birthdate} #{profile.format_age}", width: 340, align: :left, valign: :center),
+      make_cell(content: "#{@profile.format_birthdate} #{@profile.format_age}", width: 340, align: :left, valign: :center),
       make_cell(content: '', width: 30, align: :left, valign: :center),
       make_cell(content: '', width: 90, align: :left, valign: :center)
     ]
 
     kana_box = [
       make_cell(content: 'ふりがな', width: 60),
-      make_cell(content: "#{profile.first_name_kana} #{profile.last_name_kana}", width: 340, align: :left, valign: :center),
+      make_cell(content: "#{@profile.first_name_kana} #{@profile.last_name_kana}", width: 340, align: :left, valign: :center),
       make_cell(content: '', width: 30, align: :left, valign: :center),
       make_cell(content: '', width: 90, align: :left, valign: :center)
     ]
 
     name_box = [
       make_cell(content: '名前', width: 60),
-      make_cell(content: "#{profile.first_name} #{profile.last_name}", width: 340, height: 40, align: :left, valign: :center, size: 20),
+      make_cell(content: "#{@profile.first_name} #{@profile.last_name}", width: 340, height: 40, align: :left, valign: :center, size: 20),
       make_cell(content: '', width: 30, align: :left, valign: :center),
       # TODO 写真ができたら実装する
       make_cell(content: ' 写真 ', width: 90, height: 40, align: :center, valign: :center, size: 20)
@@ -115,20 +120,20 @@ class SamplePdf < Prawn::Document
   def create_address
     address_kana_box = [
       make_cell(content: 'ふりがな', width: 60),
-      make_cell(content: 'とうきょうとなかのくやよいちょう', width: 320, align: :left),
-      make_cell(content: '電話 xxx-xxxx-xxxx', width: 170),
+      make_cell(content: @address.content_kana, width: 320, align: :left),
+      make_cell(content: "電話 #{@profile.format_phone_number}", width: 170),
     ]
 
     postal_code_box = [
       make_cell(content: '現住所', width: 60),
-      make_cell(content: '〒 xxxxxxxxxxxxxxxxxx', width: 320, align: :left),
+      make_cell(content: "〒 #{@address.format_postal_code}", width: 320, align: :left),
       make_cell(content: 'Email', width: 170),
     ]
 
     address_box = [
       make_cell(content: '', width: 60),
-      make_cell(content: 'xxx県 xxx市 xxx町 xxxxxxxx', width: 320, height: 60, align: :left, valign: :center, size: 18),
-      make_cell(content: 'xxxx@xxxxx.xxxxxx/xxx', width: 170),
+      make_cell(content: @address.content, width: 320, height: 60, align: :left, valign: :center, size: 18),
+      make_cell(content: @profile.email, width: 170),
     ]
 
     table([
