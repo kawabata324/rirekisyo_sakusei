@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_11_064633) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_11_070609) do
+  create_table "addresses", force: :cascade do |t|
+    t.integer "postal_code"
+    t.string "content", default: ""
+    t.string "content_kana", default: ""
+    t.integer "personal_history_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["personal_history_id"], name: "index_addresses_on_personal_history_id"
+  end
+
   create_table "personal_histories", force: :cascade do |t|
     t.string "uuid"
     t.datetime "created_at", null: false
@@ -34,5 +44,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_064633) do
     t.index ["personal_history_id"], name: "index_profiles_on_personal_history_id"
   end
 
+  add_foreign_key "addresses", "personal_histories"
   add_foreign_key "profiles", "personal_histories"
 end
