@@ -2,7 +2,7 @@ class Profile < ApplicationRecord
   belongs_to :personal_history
   # TODO: https://qiita.com/snyt45/items/faf846413d103c68adf9
   # validation Errorよりも先に、500Errorになってしまう
-  enum sex: { man: 'man', woman: 'woman', unknown: 'unknown' }
+  enum sex: { man: 'man', woman: 'woman', unknown: '' }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   PHONE_NUMBER_LENGTH = 11

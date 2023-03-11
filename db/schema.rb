@@ -19,15 +19,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_064633) do
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.string "first_name"
-    t.string "first_name_kana"
-    t.string "last_name"
-    t.string "last_name_kana"
-    t.string "email"
+    t.string "first_name", default: ""
+    t.string "first_name_kana", default: ""
+    t.string "last_name", default: ""
+    t.string "last_name_kana", default: ""
+    t.string "email", default: ""
     t.integer "phone_number"
     t.date "birth_date_on"
     t.integer "age"
-    t.string "sex", default: "unknown"
+    t.string "sex", default: ""
     t.integer "personal_history_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

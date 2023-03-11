@@ -6,7 +6,7 @@ class PersonalHistories::PdfsController < PersonalHistories::ApplicationControll
     # TODO: https://medium.com/@sushantbajracharya/rails-api-and-prawn-gem-a11e4926f228
     # フロントに送る時は上記を参考にする
     send_data pdf.render,
-              filename: "sample.pdf",
+              filename: "#{@personal_history.name}.pdf",
               type: "application/pdf",
               disposition: "inline"
   end
@@ -76,14 +76,14 @@ class SamplePdf < Prawn::Document
 
     kana_box = [
       make_cell(content: 'ふりがな', width: 60),
-      make_cell(content: "#{profile.first_name_kana || ''} #{profile.last_name_kana || ''}", width: 340, align: :left, valign: :center),
+      make_cell(content: "#{profile.first_name_kana} #{profile.last_name_kana}", width: 340, align: :left, valign: :center),
       make_cell(content: '', width: 30, align: :left, valign: :center),
       make_cell(content: '', width: 90, align: :left, valign: :center)
     ]
 
     name_box = [
       make_cell(content: '名前', width: 60),
-      make_cell(content: "#{profile.first_name || ''} #{profile.last_name || ''}", width: 340, height: 40, align: :left, valign: :center, size: 20),
+      make_cell(content: "#{profile.first_name} #{profile.last_name}", width: 340, height: 40, align: :left, valign: :center, size: 20),
       make_cell(content: '', width: 30, align: :left, valign: :center),
       # TODO 写真ができたら実装する
       make_cell(content: ' 写真 ', width: 90, height: 40, align: :center, valign: :center, size: 20)
