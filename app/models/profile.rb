@@ -21,4 +21,10 @@ class Profile < ApplicationRecord
     return '(満  歳)' if age.nil?
     "(満 #{age} 歳)"
   end
+
+  def format_phone_number
+    return '' if phone_number.nil?
+    phone_number_str = phone_number.to_s
+    "#{phone_number_str[0..2] || ''}-#{phone_number_str[3..6] || ''}-#{phone_number_str[7..10] || ''}"
+  end
 end
