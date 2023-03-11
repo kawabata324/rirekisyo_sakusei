@@ -20,6 +20,8 @@ class SamplePdf < Prawn::Document
     @address = @personal_history.address
     @educational_back_grounds = @personal_history.format_back_grounds(back_grounds: @personal_history.educational_back_grounds)
     @license_back_grounds = @personal_history.format_back_grounds(back_grounds: @personal_history.license_back_grounds)
+    @programing_back_grounds = @personal_history.format_back_grounds(back_grounds: @personal_history.programing_back_grounds)
+    @internship_back_grounds = @personal_history.format_back_grounds(back_grounds: @personal_history.internship_back_grounds)
     font PersonalHistories::PdfsController::PDF_FONT_PATH
     move_down 10
     # 履歴書タイトル
@@ -55,9 +57,9 @@ class SamplePdf < Prawn::Document
     move_down 10
     create_back_grounds(description_title: LicenseBackGround::DESCRIPTION_TITLE, back_grounds: @license_back_grounds)
     move_down 10
-    create_back_grounds(description_title: 'プログラミング歴', back_grounds: dummy_educational_back_ground)
+    create_back_grounds(description_title: ProgramingBackGround::DESCRIPTION_TITLE, back_grounds: @programing_back_grounds)
     move_down 10
-    create_back_grounds(description_title: 'インターン・バイト・職歴', back_grounds: dummy_educational_back_ground)
+    create_back_grounds(description_title: InternshipBackGround::DESCRIPTION_TITLE, back_grounds: @internship_back_grounds)
     move_down 10
     create_self_content
   end
