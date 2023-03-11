@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_10_120851) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_11_064633) do
   create_table "personal_histories", force: :cascade do |t|
     t.string "uuid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name", default: "履歴書", null: false
   end
 
   create_table "profiles", force: :cascade do |t|
