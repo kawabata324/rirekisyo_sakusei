@@ -3,6 +3,8 @@ class PersonalHistory < ApplicationRecord
   has_one :address
   has_many :educational_back_grounds
   has_many :license_back_grounds
+  has_many :programing_back_grounds
+  has_many :internship_back_grounds
 
   def updated_on
     self.updated_at.to_date
