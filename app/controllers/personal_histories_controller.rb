@@ -10,12 +10,14 @@ class PersonalHistoriesController < ApplicationController
   end
 
   def create
-    personal_history = PersonalHistory.create!(
-      uuid: PersonalHistoriesController.uuid
-    )
-    Profile.create!(
-      personal_history: personal_history
-    )
+    ActiveRecord::Base.transaction do
+      personal_history = PersonalHistory.create!(
+        uuid: PersonalHistoriesController.uuid
+      )
+      Profile.create!(
+        personal_history: personal_history
+      )
+    end
 
     render json: { 'uuid' => personal_history.uuid }
   end
