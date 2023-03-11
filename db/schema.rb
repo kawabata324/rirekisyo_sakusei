@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_11_123655) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_11_132811) do
   create_table "addresses", force: :cascade do |t|
     t.integer "postal_code"
     t.string "content", default: ""
@@ -28,6 +28,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_123655) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["personal_history_id"], name: "index_educational_back_grounds_on_personal_history_id"
+  end
+
+  create_table "internship_back_grounds", force: :cascade do |t|
+    t.integer "personal_history_id", null: false
+    t.string "description", default: ""
+    t.date "happened_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["personal_history_id"], name: "index_internship_back_grounds_on_personal_history_id"
   end
 
   create_table "license_back_grounds", force: :cascade do |t|
@@ -63,8 +72,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_123655) do
     t.index ["personal_history_id"], name: "index_profiles_on_personal_history_id"
   end
 
+  create_table "programing_back_grounds", force: :cascade do |t|
+    t.integer "personal_history_id", null: false
+    t.string "description", default: ""
+    t.date "happened_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["personal_history_id"], name: "index_programing_back_grounds_on_personal_history_id"
+  end
+
   add_foreign_key "addresses", "personal_histories"
   add_foreign_key "educational_back_grounds", "personal_histories"
+  add_foreign_key "internship_back_grounds", "personal_histories"
   add_foreign_key "license_back_grounds", "personal_histories"
   add_foreign_key "profiles", "personal_histories"
+  add_foreign_key "programing_back_grounds", "personal_histories"
 end
