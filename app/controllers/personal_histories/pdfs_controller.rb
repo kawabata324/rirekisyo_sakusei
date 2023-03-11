@@ -19,6 +19,7 @@ class SamplePdf < Prawn::Document
     @profile = @personal_history.profile
     @address = @personal_history.address
     @educational_back_grounds = @personal_history.format_educational_back_grounds
+    @license_back_grounds = @personal_history.format_license_back_grounds
     font PersonalHistories::PdfsController::PDF_FONT_PATH
     move_down 10
     # 履歴書タイトル
@@ -52,7 +53,7 @@ class SamplePdf < Prawn::Document
     ]
     create_back_grounds(description_title: EducationalBackGround::DESCRIPTION_TITLE, back_grounds: @educational_back_grounds)
     move_down 10
-    create_back_grounds(description_title: '資格・免許', back_grounds: dummy_educational_back_ground)
+    create_back_grounds(description_title: '資格・免許', back_grounds: @license_back_grounds)
     move_down 10
     create_back_grounds(description_title: 'プログラミング歴', back_grounds: dummy_educational_back_ground)
     move_down 10
@@ -160,15 +161,6 @@ class SamplePdf < Prawn::Document
       make_cell(content: '月', width: 40, align: :center),
       make_cell(content: description_title, width: 450, align: :center),
     ]
-
-    # INFO: 何もなかったら、見栄えのために3つ入れる
-    if back_grounds.empty?
-      back_grounds = [
-        { year: '', month: '', description: '' },
-        { year: '', month: '', description: '' },
-        { year: '', month: '', description: '' },
-      ]
-    end
 
     back_ground_boxes = back_grounds.map do |back_ground|
       [

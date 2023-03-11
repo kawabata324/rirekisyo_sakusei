@@ -20,6 +20,12 @@ class PersonalHistoriesController < ApplicationController
       Address.create!(
         personal_history: @personal_history
       )
+      EducationalBackGround.create!(
+        personal_history: @personal_history
+      )
+      LicenseBackGround.create!(
+        personal_history: @personal_history
+      )
     end
 
     render json: { 'uuid' => @personal_history.uuid }
