@@ -18,6 +18,7 @@ class SamplePdf < Prawn::Document
     @personal_history = personal_history
     @profile = @personal_history.profile
     @address = @personal_history.address
+    @educational_back_grounds = @personal_history.format_educational_back_grounds
     font PersonalHistories::PdfsController::PDF_FONT_PATH
     move_down 10
     # 履歴書タイトル
@@ -49,13 +50,13 @@ class SamplePdf < Prawn::Document
         description: "xx大学卒業予定"
       }
     ]
-    create_back_ground(backgrounds: dummy_educational_back_ground, description_title: '学歴')
+    create_back_grounds(description_title: EducationalBackGround::DESCRIPTION_TITLE, back_grounds: @educational_back_grounds)
     move_down 10
-    create_back_ground(backgrounds: dummy_educational_back_ground, description_title: '免許試験')
+    create_back_grounds(description_title: '資格・免許', back_grounds: dummy_educational_back_ground)
     move_down 10
-    create_back_ground(backgrounds: dummy_educational_back_ground, description_title: 'プログラミング歴')
+    create_back_grounds(description_title: 'プログラミング歴', back_grounds: dummy_educational_back_ground)
     move_down 10
-    create_back_ground(backgrounds: dummy_educational_back_ground, description_title: 'インターンシップ歴')
+    create_back_grounds(description_title: 'インターン・バイト・職歴', back_grounds: dummy_educational_back_ground)
     move_down 10
     create_self_content
   end
@@ -153,24 +154,33 @@ class SamplePdf < Prawn::Document
     end
   end
 
-  def create_back_ground(backgrounds:, description_title:)
+  def create_back_grounds(description_title:, back_grounds:)
     toc_box = [
       make_cell(content: '年', width: 60, align: :center),
       make_cell(content: '月', width: 40, align: :center),
       make_cell(content: description_title, width: 450, align: :center),
     ]
 
-    background_boxes = backgrounds.map do |bg|
+    # INFO: 何もなかったら、見栄えのために3つ入れる
+    if back_grounds.empty?
+      back_grounds = [
+        { year: '', month: '', description: '' },
+        { year: '', month: '', description: '' },
+        { year: '', month: '', description: '' },
+      ]
+    end
+
+    back_ground_boxes = back_grounds.map do |back_ground|
       [
-        make_cell(content: 'xxxx', width: 60, align: :center),
-        make_cell(content: 'xx', width: 40, align: :center),
-        make_cell(content: 'xxxxxxxxxxxxxxxxxxxx', width: 450, align: :left),
+        make_cell(content: "#{back_ground[:year]}", width: 60, height: 23, align: :center),
+        make_cell(content: "#{back_ground[:month]}", width: 40, align: :center),
+        make_cell(content: back_ground[:description], width: 450, align: :left),
       ]
     end
 
     table([
             toc_box,
-            *background_boxes,
+            *back_ground_boxes,
           ], width: 550) do
       row(0).column(0).borders = [:top, :left, :right]
       row(0).column(1).borders = [:right, :top]

@@ -1,4 +1,4 @@
-class PersonalHistories::AddressController < PersonalHistories::ApplicationController
+class PersonalHistories::AddressesController < PersonalHistories::ApplicationController
   before_action :set_address, only: %i[show update destroy]
 
   def show
