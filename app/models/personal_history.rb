@@ -1,6 +1,7 @@
 class PersonalHistory < ApplicationRecord
   has_one :profile
   has_one :address
+  has_one :self_content
   has_many :educational_back_grounds
   has_many :license_back_grounds
   has_many :programing_back_grounds

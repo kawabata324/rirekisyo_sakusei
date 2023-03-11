@@ -22,6 +22,7 @@ class SamplePdf < Prawn::Document
     @license_back_grounds = @personal_history.format_back_grounds(back_grounds: @personal_history.license_back_grounds)
     @programing_back_grounds = @personal_history.format_back_grounds(back_grounds: @personal_history.programing_back_grounds)
     @internship_back_grounds = @personal_history.format_back_grounds(back_grounds: @personal_history.internship_back_grounds)
+    @self_content = @personal_history.self_content
     font PersonalHistories::PdfsController::PDF_FONT_PATH
     move_down 10
     # 履歴書タイトル
@@ -31,28 +32,7 @@ class SamplePdf < Prawn::Document
     # 住所
     create_address
     move_down 10
-    dummy_educational_back_ground = [
-      {
-        year: 2019,
-        month: 4,
-        description: 'xx高校卒業'
-      },
-      {
-        year: 2024,
-        month: 3,
-        description: "xx大学卒業予定"
-      },
-      {
-        year: 2024,
-        month: 3,
-        description: "xx大学卒業予定"
-      },
-      {
-        year: 2024,
-        month: 3,
-        description: "xx大学卒業予定"
-      }
-    ]
+    # 軌跡
     create_back_grounds(description_title: EducationalBackGround::DESCRIPTION_TITLE, back_grounds: @educational_back_grounds)
     move_down 10
     create_back_grounds(description_title: LicenseBackGround::DESCRIPTION_TITLE, back_grounds: @license_back_grounds)
@@ -61,6 +41,7 @@ class SamplePdf < Prawn::Document
     move_down 10
     create_back_grounds(description_title: InternshipBackGround::DESCRIPTION_TITLE, back_grounds: @internship_back_grounds)
     move_down 10
+    # 自己PR
     create_self_content
   end
 
@@ -186,10 +167,10 @@ class SamplePdf < Prawn::Document
 
   def create_self_content
     self_content_box_title = [
-      make_cell(content: '自己PR・志望動機・アピールポイントなど', width: 550, align: :left)
+      make_cell(content: SelfContent::TITLE, width: 550, align: :left)
     ]
     self_content_box = [
-      make_cell(content: 'x' * 1000, width: 550, height: 400, align: :left)
+      make_cell(content: @self_content, width: 550, height: 400, align: :left)
     ]
     table([
             self_content_box_title,

@@ -1,8 +1,14 @@
 class PersonalHistories::InternshipBackGroundsController < PersonalHistories::ApplicationController
-  before_action :set_internship_back_ground, only: %i[index update destroy]
+  before_action :set_internship_back_ground, only: %i[update destroy]
 
   def index
     render json: @personal_history.internship_back_grounds
+  end
+
+  def create
+    new_internship_back_ground = InternshipBackGround.create!(internship_back_ground_params)
+
+    render json: new_internship_back_ground
   end
 
   def update

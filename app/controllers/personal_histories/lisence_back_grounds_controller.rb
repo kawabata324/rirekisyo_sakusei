@@ -1,8 +1,14 @@
 class PersonalHistories::EducationalBackGroundsController < PersonalHistories::ApplicationController
-  before_action :set_license_back_ground, only: %i[index update destroy]
+  before_action :set_license_back_ground, only: %i[update destroy]
 
   def index
     render json: @personal_history.license_back_grounds
+  end
+
+  def create
+    new_license_back_ground = LicenseBackGround.create!(license_back_ground_params)
+
+    render json: new_license_back_ground
   end
 
   def update

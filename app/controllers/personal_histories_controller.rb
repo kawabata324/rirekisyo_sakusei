@@ -5,7 +5,7 @@ class PersonalHistoriesController < ApplicationController
 
   def index
     # TODO: current_userのに絞る必要がある, WIP
-    @personal_histories = PersonalHistory.all
+    @personal_histories = PersonalHistory.all.order(:id)
     render json: @personal_histories
   end
 
@@ -30,6 +30,9 @@ class PersonalHistoriesController < ApplicationController
         personal_history: @personal_history
       )
       InternshipBackGround.create!(
+        personal_history: @personal_history
+      )
+      SelfContent.create!(
         personal_history: @personal_history
       )
     end
