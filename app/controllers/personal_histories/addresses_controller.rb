@@ -15,14 +15,13 @@ class PersonalHistories::AddressesController < PersonalHistories::ApplicationCon
 
   private
 
-    def set_address
-      @address = @personal_history.address
-    end
+  def set_address
+    @address = @personal_history.address
+  end
 
-    def address_params
-      params.require(:address).permit(:postal_code,
-                                      :content,
-                                      :content_kana,
-      )
-    end
+  def address_params
+    params.require(:address).permit(:postal_code,
+                                    :content,
+                                    :content_kana)
+  end
 end

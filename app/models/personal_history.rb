@@ -8,7 +8,7 @@ class PersonalHistory < ApplicationRecord
   has_many :internship_back_grounds
 
   def updated_on
-    self.updated_at.to_date
+    updated_at.to_date
   end
 
   def format_back_grounds(back_grounds:)
@@ -23,9 +23,9 @@ class PersonalHistory < ApplicationRecord
 
   private
 
-    def get_year_month_from_happened_on(happened_on:)
-      return '' if happened_on.nil?
+  def get_year_month_from_happened_on(happened_on:)
+    return '' if happened_on.nil?
 
-      [happened_on.year, happened_on.month]
-    end
+    [happened_on.year, happened_on.month]
+  end
 end

@@ -21,13 +21,12 @@ class PersonalHistories::ProgramingBackGroundsController < PersonalHistories::Ap
 
   private
 
-    def set_programing_back_ground
-      @programing_back_ground = @personal_history.programing_back_grounds.find(params[:id])
-    end
+  def set_programing_back_ground
+    @programing_back_ground = @personal_history.programing_back_grounds.find(params[:id])
+  end
 
-    def programing_back_ground_params
-      params.require(:programing_back_ground).permit(:description,
-                                                     :happened_on
-      )
-    end
+  def programing_back_ground_params
+    params.require(:programing_back_ground).permit(:description,
+                                                   :happened_on)
+  end
 end

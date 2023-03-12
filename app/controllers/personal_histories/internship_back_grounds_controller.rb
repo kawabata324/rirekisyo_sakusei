@@ -21,13 +21,12 @@ class PersonalHistories::InternshipBackGroundsController < PersonalHistories::Ap
 
   private
 
-    def set_internship_back_ground
-      @internship_back_ground = @personal_history.internship_back_grounds.find(params[:id])
-    end
+  def set_internship_back_ground
+    @internship_back_ground = @personal_history.internship_back_grounds.find(params[:id])
+  end
 
-    def internship_back_ground_params
-      params.require(:internship_back_ground).permit(:description,
-                                                     :happened_on
-      )
-    end
+  def internship_back_ground_params
+    params.require(:internship_back_ground).permit(:description,
+                                                   :happened_on)
+  end
 end

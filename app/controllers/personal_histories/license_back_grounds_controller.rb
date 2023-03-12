@@ -1,4 +1,4 @@
-class PersonalHistories::EducationalBackGroundsController < PersonalHistories::ApplicationController
+class PersonalHistories::LicenseBackGroundsController < PersonalHistories::ApplicationController
   before_action :set_license_back_ground, only: %i[update destroy]
 
   def index
@@ -21,13 +21,12 @@ class PersonalHistories::EducationalBackGroundsController < PersonalHistories::A
 
   private
 
-    def set_license_back_ground
-      @license_back_ground = @personal_history.license_back_grounds.find(params[:id])
-    end
+  def set_license_back_ground
+    @license_back_ground = @personal_history.license_back_grounds.find(params[:id])
+  end
 
-    def license_back_ground_params
-      params.require(:license_back_ground).permit(:description,
-                                                  :happened_on
-      )
-    end
+  def license_back_ground_params
+    params.require(:license_back_ground).permit(:description,
+                                                :happened_on)
+  end
 end

@@ -7,8 +7,8 @@ class PersonalHistories::PdfsController < PersonalHistories::ApplicationControll
     # フロントに送る時は上記を参考にする
     send_data pdf.render,
               filename: "#{@personal_history.name}.pdf",
-              type: "application/pdf",
-              disposition: "inline"
+              type: 'application/pdf',
+              disposition: 'inline'
   end
 end
 
@@ -49,7 +49,8 @@ class SamplePdf < Prawn::Document
     table([
             [
               make_cell(content: '履  歴  書', width: 200, align: :left, size: 18),
-              make_cell(content: "#{I18n.l(@personal_history.updated_on, format: :long)} 現在", width: 200, align: :right, size: 10, valign: :bottom)
+              make_cell(content: "#{I18n.l(@personal_history.updated_on, format: :long)} 現在", width: 200, align: :right,
+                        size: 10, valign: :bottom)
             ]
           ], width: 400) do
       row(0).borders = []
@@ -73,9 +74,10 @@ class SamplePdf < Prawn::Document
 
     name_box = [
       make_cell(content: '名前', width: 60),
-      make_cell(content: "#{@profile.first_name} #{@profile.last_name}", width: 340, height: 40, align: :left, valign: :center, size: 20),
+      make_cell(content: "#{@profile.first_name} #{@profile.last_name}", width: 340, height: 40, align: :left, valign: :center,
+                size: 20),
       make_cell(content: '', width: 30, align: :left, valign: :center),
-      # TODO 写真ができたら実装する
+      # TODO: 写真ができたら実装する
       make_cell(content: ' 写真 ', width: 90, height: 40, align: :center, valign: :center, size: 20)
     ]
 
@@ -106,19 +108,19 @@ class SamplePdf < Prawn::Document
     address_kana_box = [
       make_cell(content: 'ふりがな', width: 60),
       make_cell(content: @address.content_kana, width: 320, align: :left),
-      make_cell(content: "電話 #{@profile.format_phone_number}", width: 170),
+      make_cell(content: "電話 #{@profile.format_phone_number}", width: 170)
     ]
 
     postal_code_box = [
       make_cell(content: '現住所', width: 60),
       make_cell(content: "〒 #{@address.format_postal_code}", width: 320, align: :left),
-      make_cell(content: 'Email', width: 170),
+      make_cell(content: 'Email', width: 170)
     ]
 
     address_box = [
       make_cell(content: '', width: 60),
       make_cell(content: @address.content, width: 320, height: 60, align: :left, valign: :center, size: 18),
-      make_cell(content: @profile.email, width: 170),
+      make_cell(content: @profile.email, width: 170)
     ]
 
     table([
@@ -142,20 +144,20 @@ class SamplePdf < Prawn::Document
     toc_box = [
       make_cell(content: '年', width: 60, align: :center),
       make_cell(content: '月', width: 40, align: :center),
-      make_cell(content: description_title, width: 450, align: :center),
+      make_cell(content: description_title, width: 450, align: :center)
     ]
 
     back_ground_boxes = back_grounds.map do |back_ground|
       [
         make_cell(content: "#{back_ground[:year]}", width: 60, height: 23, align: :center),
         make_cell(content: "#{back_ground[:month]}", width: 40, align: :center),
-        make_cell(content: back_ground[:description], width: 450, align: :left),
+        make_cell(content: back_ground[:description], width: 450, align: :left)
       ]
     end
 
     table([
             toc_box,
-            *back_ground_boxes,
+            *back_ground_boxes
           ], width: 550) do
       row(0).column(0).borders = [:top, :left, :right]
       row(0).column(1).borders = [:right, :top]

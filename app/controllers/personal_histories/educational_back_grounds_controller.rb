@@ -21,13 +21,12 @@ class PersonalHistories::EducationalBackGroundsController < PersonalHistories::A
 
   private
 
-    def set_educational_back_grounds
-      @educational_back_ground = @personal_history.educational_back_grounds.find(params[:id])
-    end
+  def set_educational_back_grounds
+    @educational_back_ground = @personal_history.educational_back_grounds.find(params[:id])
+  end
 
-    def educational_back_ground_params
-      params.require(:educational_back_ground).permit(:description,
-                                                      :happened_on
-      )
-    end
+  def educational_back_ground_params
+    params.require(:educational_back_ground).permit(:description,
+                                                    :happened_on)
+  end
 end

@@ -15,13 +15,13 @@ class PersonalHistories::SelfContentsController < PersonalHistories::Application
 
   private
 
-    def set_self_content
-      @self_content = @personal_history.self_content
-    end
+  def set_self_content
+    @self_content = @personal_history.self_content
+  end
 
-    def self_content_params
-      params.require(:self_content).permit(
-        :description,
-      )
-    end
+  def self_content_params
+    params.require(:self_content).permit(
+      :description
+    )
+  end
 end
