@@ -1,11 +1,11 @@
 class PersonalHistory < ApplicationRecord
-  has_one :profile
-  has_one :address
-  has_one :self_content
-  has_many :educational_back_grounds
-  has_many :license_back_grounds
-  has_many :programing_back_grounds
-  has_many :internship_back_grounds
+  has_one :profile, dependent: :destroy
+  has_one :address, dependent: :destroy
+  has_one :self_content, dependent: :destroy
+  has_many :educational_back_grounds, dependent: :destroy
+  has_many :license_back_grounds, dependent: :destroy
+  has_many :programing_back_grounds, dependent: :destroy
+  has_many :internship_back_grounds, dependent: :destroy
 
   def updated_on
     updated_at.to_date
