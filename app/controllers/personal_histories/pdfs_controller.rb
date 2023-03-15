@@ -1,5 +1,5 @@
 class PersonalHistories::PdfsController < PersonalHistories::ApplicationController
-  PDF_FONT_PATH = 'app/assets/fonts/ipaexm.ttf'
+  PDF_FONT_PATH = 'app/assets/fonts/ipaexm.ttf'.freeze
 
   def index
     pdf = SamplePdf.new(personal_history: @personal_history)
@@ -12,6 +12,7 @@ class PersonalHistories::PdfsController < PersonalHistories::ApplicationControll
   end
 end
 
+# TODO: リファクタする必要あり
 class SamplePdf < Prawn::Document
   def initialize(personal_history:)
     super()
@@ -149,8 +150,8 @@ class SamplePdf < Prawn::Document
 
     back_ground_boxes = back_grounds.map do |back_ground|
       [
-        make_cell(content: "#{back_ground[:year]}", width: 60, height: 23, align: :center),
-        make_cell(content: "#{back_ground[:month]}", width: 40, align: :center),
+        make_cell(content: (back_ground[:year]).to_s, width: 60, height: 23, align: :center),
+        make_cell(content: (back_ground[:month]).to_s, width: 40, align: :center),
         make_cell(content: back_ground[:description], width: 450, align: :left)
       ]
     end
