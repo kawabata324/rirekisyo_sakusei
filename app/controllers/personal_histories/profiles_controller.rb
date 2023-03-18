@@ -2,15 +2,17 @@ class PersonalHistories::ProfilesController < PersonalHistories::ApplicationCont
   before_action :set_profile, only: %i[show update destroy]
 
   def show
-    render json: @profile
+    render json: @profile, status: 200
   end
 
   def update
     @profile.update!(profile_params)
+    render json: @profile, status: 200
   end
 
   def destroy
     @profile.destroy!
+    render status: 200
   end
 
   private

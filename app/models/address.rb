@@ -6,6 +6,6 @@ class Address < ApplicationRecord
   def format_postal_code
     return '' if postal_code.nil?
 
-    "#{postal_code[0..2] || ''}-#{postal_code[3..6] || ''}"
+    "#{postal_code.to_s[0..2] || ''}-#{postal_code.to_s[3..6] || ''}"
   end
 end
