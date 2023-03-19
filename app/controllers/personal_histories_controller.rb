@@ -12,7 +12,8 @@ class PersonalHistoriesController < ApplicationController
   def create
     ActiveRecord::Base.transaction do
       @personal_history = PersonalHistory.create!(
-        uuid: PersonalHistoriesController.uuid
+        uuid: PersonalHistoriesController.uuid,
+        name: personal_history_params[:name]
       )
       Profile.create!(
         personal_history: @personal_history
@@ -38,5 +39,11 @@ class PersonalHistoriesController < ApplicationController
     end
 
     render json: { 'uuid' => @personal_history.uuid }
+  end
+
+  private
+
+  def personal_history_params
+    params.require(:personal_history).permit(:name)
   end
 end
