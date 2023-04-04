@@ -1,9 +1,14 @@
 ---
 ja:
   activerecord:
+    attributes:
+      profile:
+        birth_date_on: 誕生日
+        email: メール
+        phone_number: 電話番号
     errors:
       messages:
-        record_invalid: 'バリデーションに失敗しました: %{errors}'
+        record_invalid: '%{errors}'
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"

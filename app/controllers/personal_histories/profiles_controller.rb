@@ -2,17 +2,23 @@ class PersonalHistories::ProfilesController < PersonalHistories::ApplicationCont
   before_action :set_profile, only: %i[show update destroy]
 
   def show
-    render json: @profile, status: 200
+    render json: @profile, status: :ok
   end
 
   def update
-    @profile.update!(profile_params)
-    render json: @profile, status: 200
+    begin
+      @profile.update!(profile_params)
+      render json: @profile, status: :ok
+    rescue ActiveRecord::RecordInvalid => e
+      render json: { message: e.message }, status: :unprocessable_entity
+    rescue StandardError => e
+      render json: { message: e.message }, status: :internal_server_error
+    end
   end
 
   def destroy
     @profile.destroy!
-    render status: 200
+    render status: :ok
   end
 
   private
@@ -27,7 +33,7 @@ class PersonalHistories::ProfilesController < PersonalHistories::ApplicationCont
                                     :last_name,
                                     :last_name_kana,
                                     :email,
-                                    :photo_number,
+                                    :phone_number,
                                     :birth_date_on,
                                     :age,
                                     :sex)

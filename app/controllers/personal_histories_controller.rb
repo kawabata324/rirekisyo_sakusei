@@ -38,7 +38,7 @@ class PersonalHistoriesController < ApplicationController
       )
     end
 
-    render json: { 'uuid' => @personal_history.uuid }
+    render json: { uuid: @personal_history.uuid, name: @personal_history.name }
   end
 
   private

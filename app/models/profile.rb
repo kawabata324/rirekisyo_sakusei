@@ -15,13 +15,20 @@ class Profile < ApplicationRecord
   def format_birthdate
     return '年 月 日生' if birth_date_on.nil?
 
-    "#{I18n.l(updated_on, format: :long)}生"
+    birth_date_on.to_date
+    "#{I18n.l(birth_date_on, format: :long)}生"
   end
 
   def format_age
     return '(満  歳)' if age.nil?
 
     "(満 #{age} 歳)"
+  end
+
+  def format_sex
+    return '' if unknown?
+    return '男性' if man?
+    return '女性' if woman?
   end
 
   def format_phone_number

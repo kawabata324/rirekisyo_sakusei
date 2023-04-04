@@ -3,8 +3,6 @@ class PersonalHistories::PdfsController < PersonalHistories::ApplicationControll
 
   def index
     pdf = SamplePdf.new(personal_history: @personal_history)
-    # TODO: https://medium.com/@sushantbajracharya/rails-api-and-prawn-gem-a11e4926f228
-    # フロントに送る時は上記を参考にする
     send_data pdf.render,
               filename: "#{@personal_history.name}.pdf",
               type: 'application/pdf',
@@ -61,7 +59,7 @@ class SamplePdf < Prawn::Document
   def create_profile
     age_box = [
       make_cell(content: '', width: 60),
-      make_cell(content: "#{@profile.format_birthdate} #{@profile.format_age}", width: 340, align: :left, valign: :center),
+      make_cell(content: "#{@profile.format_birthdate} #{@profile.format_age} #{@profile.format_sex}", width: 340, align: :left, valign: :center),
       make_cell(content: '', width: 30, align: :left, valign: :center),
       make_cell(content: '', width: 90, align: :left, valign: :center)
     ]
@@ -173,7 +171,7 @@ class SamplePdf < Prawn::Document
       make_cell(content: SelfContent::TITLE, width: 550, align: :left)
     ]
     self_content_box = [
-      make_cell(content: @self_content, width: 550, height: 400, align: :left)
+      make_cell(content: @self_content.description, width: 550, height: 400, align: :left)
     ]
     table([
             self_content_box_title,

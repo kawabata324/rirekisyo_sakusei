@@ -2,17 +2,17 @@ class PersonalHistories::AddressesController < PersonalHistories::ApplicationCon
   before_action :set_address, only: %i[show update destroy]
 
   def show
-    render json: @address, status: 200
+    render json: @address, status: :ok
   end
 
   def update
     @address.update!(address_params)
-    render json: @address, status: 200
+    render json: @address, status: :ok
   end
 
   def destroy
     @address.destroy!
-    render status: 200
+    render status: :ok
   end
 
   private

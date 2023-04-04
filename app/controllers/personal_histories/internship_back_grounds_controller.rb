@@ -8,15 +8,19 @@ class PersonalHistories::InternshipBackGroundsController < PersonalHistories::Ap
   def create
     new_internship_back_ground = InternshipBackGround.create!(internship_back_ground_params)
 
-    render json: new_internship_back_ground
+    render json: new_internship_back_ground, status: :ok
   end
 
   def update
     @internship_back_ground.update!(internship_back_ground_params)
+
+    render json: @internship_back_ground, status: :ok
   end
 
   def destroy
     @internship_back_ground.destroy!
+
+    render json: @internship_back_ground
   end
 
   private
